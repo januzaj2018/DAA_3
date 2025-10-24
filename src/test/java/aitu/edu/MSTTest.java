@@ -23,7 +23,6 @@ public class MSTTest {
     }
 
     private EdgeWeightedGraph buildDisconnectedGraph() {
-        // 5 vertices: 0-2 connected, 3-4 connected separately
         EdgeWeightedGraph G = new EdgeWeightedGraph(5);
         G.addEdge(new Edge(0,1,1));
         G.addEdge(new Edge(1,2,2));
@@ -52,6 +51,10 @@ public class MSTTest {
         PrimMST.MSTResult prim = PrimMST.run(G);
         KruskalMST.MSTResult kruskal = KruskalMST.run(G);
 
+        System.out.println("[Correctness] Prim totalWeight=" + prim.totalWeight + ", edges=" + prim.edges.size() + ", timeMs=" + prim.executionTimeMs + ", ops=" + prim.operationsCount);
+        System.out.println("[Correctness] Kruskal totalWeight=" + kruskal.totalWeight + ", edges=" + kruskal.edges.size() + ", timeMs=" + kruskal.executionTimeMs + ", ops=" + kruskal.operationsCount);
+        System.out.println("[Correctness] Prim edges: " + edgeSetSignature(prim.edges));
+        System.out.println("[Correctness] Kruskal edges: " + edgeSetSignature(kruskal.edges));
 
         assertEquals(prim.totalWeight, kruskal.totalWeight, 1e-9, "Total MST cost should match between algorithms");
 
@@ -87,7 +90,11 @@ public class MSTTest {
         PrimMST.MSTResult prim = PrimMST.run(G);
         KruskalMST.MSTResult kruskal = KruskalMST.run(G);
 
-        // For disconnected graph, algorithms should not produce V-1 edges
+        System.out.println("[Disconnected] Prim edges=" + prim.edges.size() + ", totalWeight=" + prim.totalWeight + ", timeMs=" + prim.executionTimeMs + ", ops=" + prim.operationsCount);
+        System.out.println("[Disconnected] Kruskal edges=" + kruskal.edges.size() + ", totalWeight=" + kruskal.totalWeight + ", timeMs=" + kruskal.executionTimeMs + ", ops=" + kruskal.operationsCount);
+        System.out.println("[Disconnected] Prim edges: " + edgeSetSignature(prim.edges));
+        System.out.println("[Disconnected] Kruskal edges: " + edgeSetSignature(kruskal.edges));
+
         assertTrue(prim.edges.size() < V-1, "Prim should not produce V-1 edges for disconnected graph");
         assertTrue(kruskal.edges.size() < V-1, "Kruskal should not produce V-1 edges for disconnected graph");
 
@@ -107,12 +114,16 @@ public class MSTTest {
     public void testPerformanceAndReproducibility() {
         EdgeWeightedGraph G = buildSampleGraph();
 
-        // Run twice for reproducibility
         PrimMST.MSTResult p1 = PrimMST.run(G);
         PrimMST.MSTResult p2 = PrimMST.run(G);
 
         KruskalMST.MSTResult k1 = KruskalMST.run(G);
         KruskalMST.MSTResult k2 = KruskalMST.run(G);
+
+        System.out.println("[Perf] Prim run1 timeMs=" + p1.executionTimeMs + ", ops=" + p1.operationsCount + ", totalWeight=" + p1.totalWeight);
+        System.out.println("[Perf] Prim run2 timeMs=" + p2.executionTimeMs + ", ops=" + p2.operationsCount + ", totalWeight=" + p2.totalWeight);
+        System.out.println("[Perf] Kruskal run1 timeMs=" + k1.executionTimeMs + ", ops=" + k1.operationsCount + ", totalWeight=" + k1.totalWeight);
+        System.out.println("[Perf] Kruskal run2 timeMs=" + k2.executionTimeMs + ", ops=" + k2.operationsCount + ", totalWeight=" + k2.totalWeight);
 
         assertTrue(p1.executionTimeMs >= 0.0, "Prim execution time non-negative");
         assertTrue(k1.executionTimeMs >= 0.0, "Kruskal execution time non-negative");
@@ -139,6 +150,8 @@ public class MSTTest {
         PrimMST.MSTResult prim = PrimMST.run(G);
         KruskalMST.MSTResult kruskal = KruskalMST.run(G);
 
+        System.out.println("[OpsConsistency] Prim ops=" + prim.operationsCount + ", timeMs=" + prim.executionTimeMs + ", totalWeight=" + prim.totalWeight + ", edges=" + prim.edges.size());
+        System.out.println("[OpsConsistency] Kruskal ops=" + kruskal.operationsCount + ", timeMs=" + kruskal.executionTimeMs + ", totalWeight=" + kruskal.totalWeight + ", edges=" + kruskal.edges.size());
 
         assertTrue(prim.operationsCount >= 0, "Prim operations count non-negative");
         assertTrue(kruskal.operationsCount >= 0, "Kruskal operations count non-negative");
@@ -148,4 +161,3 @@ public class MSTTest {
         assertTrue(kruskal.operationsCount < 10000, "Kruskal operations count within expected bound for tiny graph");
     }
 }
-
