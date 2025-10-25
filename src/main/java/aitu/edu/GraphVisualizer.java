@@ -7,8 +7,11 @@ import guru.nidi.graphviz.attribute.Style;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizCmdLineEngine;
+import guru.nidi.graphviz.engine.Engine;
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.model.MutableNode;
+import guru.nidi.graphviz.attribute.Attributes;
+import guru.nidi.graphviz.attribute.Shape;
 
 import java.io.File;
 import java.io.FileReader;
@@ -82,15 +85,52 @@ public class GraphVisualizer {
                 System.out.println("Declared nodes: " + declaredNodes + ", declared edges: " + declaredEdges);
                 MutableGraph mg = mutGraph("graph" + g.id).setDirected(false);
 
+                // Global styling aimed at better readability on medium/large graphs
+                boolean isLarge = declaredNodes >= 80 || declaredEdges >= 150;
+                boolean hideNodeLabels = (args.length > 5 && Boolean.parseBoolean(args[5])) || isLarge; // auto-hide labels when graph is large
+
+                // Graph-level attributes
+                mg.graphAttrs().add(
+                        Attributes.attr("bgcolor", "white"),
+                        Attributes.attr("splines", "true"),          // smoother edges
+                        Attributes.attr("overlap", "false"),         // try to reduce overlaps (mainly for neato/sfdp)
+                        Attributes.attr("outputorder", "edgesfirst"),
+                        Attributes.attr("nodesep", isLarge ? "0.1" : "0.2"),
+                        Attributes.attr("ranksep", isLarge ? "0.2" : "0.4")
+                );
+                // Default node attributes
+                if (isLarge) {
+                    mg.nodeAttrs().add(
+                            Shape.POINT,
+                            Attributes.attr("width", "0.05"),         // tiny points for large graphs
+                            Attributes.attr("label", ""),
+                            Attributes.attr("color", "#9ECAE1")
+                    );
+                } else {
+                    mg.nodeAttrs().add(
+                            Shape.CIRCLE,
+                            Style.FILLED,
+                            Attributes.attr("color", "#9ECAE1"),
+                            Attributes.attr("fontname", "Helvetica"),
+                            Attributes.attr("fontsize", "10")
+                    );
+                }
+                // Default edge attributes
+                mg.linkAttrs().add(
+                        Attributes.attr("color", "#BBBBBB"),
+                        Attributes.attr("penwidth", isLarge ? "0.8" : "1.2")
+                );
+
                 Map<String, MutableNode> nodeMap = new HashMap<>();
 
                 if (g.nodes != null) {
                     for (String n : g.nodes) {
                         if (n == null) continue;
-                        MutableNode mn = mutNode(safeLabel(n))
-                            .add(Label.of(truncateLabel(n)))
-                            .add(Style.FILLED, Style.BOLD)
-                            .add(Color.LIGHTBLUE);
+                        MutableNode mn = mutNode(safeLabel(n));
+                        if (!hideNodeLabels) {
+                            mn = mn.add(Label.of(truncateLabel(n)));
+                        }
+                        mn = mn.add(Style.FILLED).add(Color.LIGHTBLUE);
                         nodeMap.put(n, mn);
                         mg.add(mn);
                     }
@@ -107,23 +147,34 @@ public class GraphVisualizer {
                         if (!seen.add(key)) continue; // skip duplicates
 
                         MutableNode na = nodeMap.computeIfAbsent(a, k -> {
-                            MutableNode mn = mutNode(safeLabel(k))
-                                .add(Label.of(truncateLabel(k)))
-                                .add(Style.FILLED, Style.BOLD)
-                                .add(Color.LIGHTBLUE);
+                            MutableNode mn = mutNode(safeLabel(k));
+                            if (!hideNodeLabels) {
+                                mn = mn.add(Label.of(truncateLabel(k)));
+                            }
+                            mn = mn.add(Style.FILLED).add(Color.LIGHTBLUE);
                             mg.add(mn);
                             return mn;
                         });
                         MutableNode nb = nodeMap.computeIfAbsent(b, k -> {
-                            MutableNode mn = mutNode(safeLabel(k))
-                                .add(Label.of(truncateLabel(k)))
-                                .add(Style.FILLED, Style.BOLD)
-                                .add(Color.LIGHTBLUE);
+                            MutableNode mn = mutNode(safeLabel(k));
+                            if (!hideNodeLabels) {
+                                mn = mn.add(Label.of(truncateLabel(k)));
+                            }
+                            mn = mn.add(Style.FILLED).add(Color.LIGHTBLUE);
                             mg.add(mn);
                             return mn;
                         });
-                            na.addLink(to(nb).with(Style.DASHED));
-//                          na.addLink(to(nb).with(Label.of(truncateLabel(String.valueOf(e.weight))), Style.DASHED));
+                        // show per-edge weight labels for small graphs when not explicitly omitted
+                        if (!omitLabels && !isLarge) {
+                            try {
+                                na.addLink(to(nb).with(Label.of(String.format("%.2f", e.weight))));
+                            } catch (Exception ex) {
+                                // fallback to unlabeled link if something goes wrong
+                                na.addLink(to(nb));
+                            }
+                        } else {
+                            na.addLink(to(nb));
+                        }
 
 
                         edgeCount++;
@@ -156,12 +207,13 @@ public class GraphVisualizer {
                 }
 
                 try {
-                    System.out.println("Rendering graph id=" + g.id + " to " + format + " (width=" + width + ")...");
+                    Engine engineChoice = isLarge ? Engine.FDP : Engine.NEATO; // FDP/NEATO improve readability; SFDP may be unavailable in this version
+                    System.out.println("Rendering graph id=" + g.id + " with layout=" + engineChoice + " to " + format + " (width=" + width + ")...");
                     if (format == Format.SVG) {
-                        Graphviz.fromGraph(mg).width(width).render(Format.SVG).toFile(svgOut);
+                        Graphviz.fromGraph(mg).engine(engineChoice).width(width).render(Format.SVG).toFile(svgOut);
                         System.out.println("Wrote: " + svgOut.getPath());
                     } else {
-                        Graphviz.fromGraph(mg).width(width).render(Format.PNG).toFile(pngOut);
+                        Graphviz.fromGraph(mg).engine(engineChoice).width(width).render(Format.PNG).toFile(pngOut);
                         System.out.println("Wrote: " + pngOut.getPath());
                     }
                 } catch (Throwable t) {
