@@ -1,4 +1,9 @@
-package aitu.edu;
+package aitu.edu.mst;
+
+import aitu.edu.mst.core.Edge;
+import aitu.edu.mst.core.EdgeWeightedGraph;
+import aitu.edu.mst.utility.IndexMinPQ;
+import aitu.edu.visual.MSTStepListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +19,10 @@ public class PrimMST {
     }
 
     public static MSTResult run(EdgeWeightedGraph G) {
+        return run(G, null);
+    }
+
+    public static MSTResult run(EdgeWeightedGraph G, MSTStepListener listener) {
         long start = System.nanoTime();
         MSTResult res = new MSTResult();
         int V = G.V();
@@ -21,6 +30,8 @@ public class PrimMST {
         Edge[] edgeTo = new Edge[V];
         double[] distTo = new double[V];
         Arrays.fill(distTo, Double.POSITIVE_INFINITY);
+
+        if (listener != null) listener.onInit(V, G.edges());
 
         IndexMinPQ<Double> pq = new IndexMinPQ<>(V);
 
@@ -32,9 +43,18 @@ public class PrimMST {
             int v = pq.delMin();
             res.operationsCount++;
             marked[v] = true;
+            if (listener != null) listener.onVisitVertex(v);
+            if (edgeTo[v] != null) {
+                Edge e = edgeTo[v];
+                int w = e.other(v);
+                if (listener != null) listener.onAcceptEdge(v, w, e.weight());
+                res.edges.add(e);
+                res.totalWeight += e.weight();
+            }
             for (Edge e : G.adj(v)) {
                 int w = e.other(v);
                 if (marked[w]) continue;
+                if (listener != null) listener.onConsiderEdge(v, w, e.weight());
                 res.operationsCount++;
                 if (e.weight() < distTo[w]) {
                     distTo[w] = e.weight();
@@ -46,18 +66,14 @@ public class PrimMST {
                         pq.insert(w, distTo[w]);
                         res.operationsCount++;
                     }
+                } else {
+                    if (listener != null) listener.onRejectEdge(v, w, e.weight());
                 }
             }
         }
 
-        for (int v = 0; v < V; v++) {
-            if (edgeTo[v] != null) {
-                res.edges.add(edgeTo[v]);
-                res.totalWeight += edgeTo[v].weight();
-            }
-        }
-
         long end = System.nanoTime();
+        if (listener != null) listener.onFinish();
         res.executionTimeMs = (end - start) / 1_000_000.0;
         return res;
     }

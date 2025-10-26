@@ -27,7 +27,10 @@
  *
  ******************************************************************************/
 
-package aitu.edu;
+package aitu.edu.mst.core;
+
+import aitu.edu.mst.io.StdIn;
+import aitu.edu.mst.io.StdOut;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

@@ -1,4 +1,4 @@
-package aitu.edu; /******************************************************************************
+package aitu.edu.mst.core; /******************************************************************************
  *  Compilation:  javac UF.java
  *  Execution:    java UF < input.txt
  *  Dependencies: StdIn.java StdOut.java
@@ -21,6 +21,9 @@ package aitu.edu; /*************************************************************
  *
  ******************************************************************************/
 
+
+import aitu.edu.mst.io.StdIn;
+import aitu.edu.mst.io.StdOut;
 
 /**
  *  The {@code UF} class represents a <em>union–find data type</em>

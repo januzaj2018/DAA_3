@@ -1,0 +1,22 @@
+{
+  "graphs": [
+    {
+      "id": 1,
+      "nodes": ["A", "B", "C", "D"],
+      "edges": [
+        { "from": "A", "to": "B", "weight": 1.2 },
+        { "from": "A", "to": "C", "weight": 2.5 },
+        { "from": "B", "to": "C", "weight": 1.8 },
+        { "from": "C", "to": "D", "weight": 0.9 }
+      ]
+    },
+    {
+      "id": 2,
+      "nodes": ["X", "Y", "Z"],
+      "edges": [
+        { "from": "X", "to": "Y", "weight": 3.4 }
+      ]
+    }
+  ]
+}
+
