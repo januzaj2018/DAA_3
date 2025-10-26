@@ -1,6 +1,6 @@
 package aitu.edu.visual;
 
-import aitu.edu.mst.Edge;
+import aitu.edu.mst.core.Edge;
 import guru.nidi.graphviz.attribute.Attributes;
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Label;

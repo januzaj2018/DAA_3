@@ -1,6 +1,6 @@
 package aitu.edu.visual;
 
-import aitu.edu.mst.Edge;
+import aitu.edu.mst.core.Edge;
 
 public class GraphStreamAnimator implements MSTStepListener, AutoCloseable {
     private final boolean verbose;

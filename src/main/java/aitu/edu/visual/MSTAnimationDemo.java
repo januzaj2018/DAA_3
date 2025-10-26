@@ -1,7 +1,7 @@
 package aitu.edu.visual;
 
-import aitu.edu.mst.Edge;
-import aitu.edu.mst.EdgeWeightedGraph;
+import aitu.edu.mst.core.Edge;
+import aitu.edu.mst.core.EdgeWeightedGraph;
 import aitu.edu.mst.KruskalMST;
 import aitu.edu.mst.PrimMST;
 import com.google.gson.Gson;

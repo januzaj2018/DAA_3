@@ -1,5 +1,8 @@
 package aitu.edu.mst;
 
+import aitu.edu.mst.core.Edge;
+import aitu.edu.mst.core.EdgeWeightedGraph;
+import aitu.edu.mst.utility.IndexMinPQ;
 import aitu.edu.visual.MSTStepListener;
 
 import java.util.ArrayList;

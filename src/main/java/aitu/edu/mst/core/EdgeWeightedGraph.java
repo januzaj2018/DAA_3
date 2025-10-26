@@ -1,4 +1,4 @@
-package aitu.edu.mst; /******************************************************************************
+package aitu.edu.mst.core; /******************************************************************************
  *  Compilation:  javac EdgeWeightedGraph.java
  *  Execution:    java EdgeWeightedGraph filename.txt
  *  Dependencies: Bag.java Edge.java In.java StdOut.java
@@ -21,6 +21,11 @@ package aitu.edu.mst; /*********************************************************
  *  7: 2-7 0.34000  1-7 0.19000  0-7 0.16000  5-7 0.28000  4-7 0.37000
  *
  ******************************************************************************/
+
+import aitu.edu.mst.io.In;
+import aitu.edu.mst.utility.Stack;
+import aitu.edu.mst.io.StdOut;
+import aitu.edu.mst.io.StdRandom;
 
 import java.util.NoSuchElementException;
 

@@ -7,7 +7,9 @@
  *
  ******************************************************************************/
 
-package aitu.edu.mst;
+package aitu.edu.mst.core;
+
+import aitu.edu.mst.io.StdOut;
 
 /**
  *  The {@code Edge} class represents a weighted edge in an

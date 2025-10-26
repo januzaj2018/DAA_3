@@ -1,6 +1,6 @@
 package aitu.edu.visual;
 
-import aitu.edu.mst.Edge;
+import aitu.edu.mst.core.Edge;
 
 public interface MSTStepListener {
     void onInit(int V, Iterable<Edge> edges);

@@ -1,6 +1,9 @@
 package aitu.edu;
 
 import aitu.edu.mst.*;
+import aitu.edu.mst.core.Edge;
+import aitu.edu.mst.core.EdgeWeightedGraph;
+import aitu.edu.mst.core.UF;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

@@ -7,7 +7,7 @@
  *
  ******************************************************************************/
 
-package aitu.edu.mst;
+package aitu.edu.mst.io;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;

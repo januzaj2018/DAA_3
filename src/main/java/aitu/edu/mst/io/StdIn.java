@@ -7,7 +7,7 @@
  *
  ******************************************************************************/
 
-package aitu.edu.mst;
+package aitu.edu.mst.io;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;

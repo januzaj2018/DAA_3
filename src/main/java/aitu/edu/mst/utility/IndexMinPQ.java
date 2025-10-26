@@ -1,4 +1,4 @@
-package aitu.edu.mst; /******************************************************************************
+package aitu.edu.mst.utility; /******************************************************************************
  *  Compilation:  javac IndexMinPQ.java
  *  Execution:    java IndexMinPQ
  *  Dependencies: StdOut.java
@@ -6,6 +6,8 @@ package aitu.edu.mst; /*********************************************************
  *  Minimum-oriented indexed PQ implementation using a binary heap.
  *
  ******************************************************************************/
+
+import aitu.edu.mst.io.StdOut;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

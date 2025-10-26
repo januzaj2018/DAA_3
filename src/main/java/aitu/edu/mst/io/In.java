@@ -7,7 +7,7 @@
  *
  ******************************************************************************/
 
-package aitu.edu.mst;
+package aitu.edu.mst.io;
 
 import java.io.BufferedInputStream;
 import java.io.File;
