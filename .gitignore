@@ -39,3 +39,7 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/copilot.data.migration.agent.xml
+/main.py
+ass_3_output_sparse.json
+ass_3_output_dense.json
+ass_3_output.json
