@@ -71,8 +71,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String inputPath = "src/main/resources/random_graphs.json";
-        String outputPath = "ass_3_output.json";
+        String inputPath = "src/main/resources/random_graphs_dense.json";
+        String outputPath = "ass_3_output_dense.json";
         if (args.length >= 1) inputPath = args[0];
         if (args.length >= 2) outputPath = args[1];
 
