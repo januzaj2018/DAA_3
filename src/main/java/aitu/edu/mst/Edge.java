@@ -7,7 +7,7 @@
  *
  ******************************************************************************/
 
-package aitu.edu;
+package aitu.edu.mst;
 
 /**
  *  The {@code Edge} class represents a weighted edge in an

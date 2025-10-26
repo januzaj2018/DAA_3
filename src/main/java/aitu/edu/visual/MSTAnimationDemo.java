@@ -1,5 +1,9 @@
-package aitu.edu;
+package aitu.edu.visual;
 
+import aitu.edu.mst.Edge;
+import aitu.edu.mst.EdgeWeightedGraph;
+import aitu.edu.mst.KruskalMST;
+import aitu.edu.mst.PrimMST;
 import com.google.gson.Gson;
 import guru.nidi.graphviz.engine.Format;
 
@@ -9,27 +13,6 @@ import java.io.Reader;
 import java.nio.file.*;
 import java.util.*;
 
-/**
- * Demo runner that reads input JSON files (ass_3_input*.json by default),
- * builds graphs, and runs Prim and Kruskal step-by-step animations.
- *
- * Output layout (default outRoot="target/ass3_output"):
- *   target/ass3_output/{inputFileBase}/graph-{id}/prim_frames/...
- *   target/ass3_output/{inputFileBase}/graph-{id}/kruskal_frames/...
- *
- * Usage:
- *   java aitu.edu.MSTAnimationDemo [inputGlob] [outRoot] [format(svg|png)] [width]
- *
- * Defaults:
- *   inputGlob = "src/main/java/aitu/edu/ass_3_input*.json"
- *   outRoot   = "target/ass3_output"
- *   format    = svg
- *   width     = 1200
- *
- * Assumptions:
- * - Input JSON format matches GraphVisualizer's structure: { "graphs": [ { "id": int, "nodes": ["a","b"], "edges": [{"from":"a","to":"b","weight":1.23}, ... ] }, ... ] }
- * - Node labels are arbitrary strings; they will be mapped to integer vertex ids (0..V-1) consistently per graph.
- */
 public class MSTAnimationDemo {
     static class InputFile {
         List<GraphDef> graphs;

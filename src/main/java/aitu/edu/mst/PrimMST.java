@@ -1,4 +1,6 @@
-package aitu.edu;
+package aitu.edu.mst;
+
+import aitu.edu.visual.MSTStepListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;

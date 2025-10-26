@@ -9,14 +9,14 @@
       "prim": {
         "mst_edges": [
           {
-            "from": "B",
-            "to": "C",
-            "weight": 2.0
-          },
-          {
             "from": "A",
             "to": "C",
             "weight": 3.0
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "weight": 2.0
           },
           {
             "from": "B",
@@ -31,7 +31,7 @@
         ],
         "total_cost": 16.0,
         "operations_count": 20,
-        "execution_time_ms": 1.0377
+        "execution_time_ms": 1.1218
       },
       "kruskal": {
         "mst_edges": [
@@ -58,7 +58,7 @@
         ],
         "total_cost": 16.0,
         "operations_count": 16,
-        "execution_time_ms": 1.4476
+        "execution_time_ms": 0.8094
       }
     },
     {
@@ -87,7 +87,7 @@
         ],
         "total_cost": 6.0,
         "operations_count": 15,
-        "execution_time_ms": 0.0168
+        "execution_time_ms": 0.0183
       },
       "kruskal": {
         "mst_edges": [
@@ -109,7 +109,7 @@
         ],
         "total_cost": 6.0,
         "operations_count": 11,
-        "execution_time_ms": 0.0202
+        "execution_time_ms": 0.0225
       }
     }
   ]

@@ -1,5 +1,9 @@
-package aitu.edu;
+package aitu.edu.app;
 
+import aitu.edu.mst.Edge;
+import aitu.edu.mst.EdgeWeightedGraph;
+import aitu.edu.mst.KruskalMST;
+import aitu.edu.mst.PrimMST;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -67,8 +71,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String inputPath = "src/main/java/aitu/edu/ass_3_input.json";
-        String outputPath = "src/main/java/aitu/edu/ass_3_output.json";
+        String inputPath = "src/main/resources/ass_3_input.json";
+        String outputPath = "/ass_3_output.json";
         if (args.length >= 1) inputPath = args[0];
         if (args.length >= 2) outputPath = args[1];
 

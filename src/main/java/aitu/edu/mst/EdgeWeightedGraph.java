@@ -1,4 +1,4 @@
-package aitu.edu; /******************************************************************************
+package aitu.edu.mst; /******************************************************************************
  *  Compilation:  javac EdgeWeightedGraph.java
  *  Execution:    java EdgeWeightedGraph filename.txt
  *  Dependencies: Bag.java Edge.java In.java StdOut.java

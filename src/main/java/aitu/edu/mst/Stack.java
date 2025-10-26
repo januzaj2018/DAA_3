@@ -18,7 +18,7 @@
  *  to be not that or be (2 left on stack)
  *
  ******************************************************************************/
-package aitu.edu;
+package aitu.edu.mst;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

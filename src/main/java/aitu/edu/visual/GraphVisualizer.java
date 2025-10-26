@@ -1,4 +1,4 @@
-package aitu.edu;
+package aitu.edu.visual;
 
 import com.google.gson.Gson;
 import guru.nidi.graphviz.attribute.Color;
@@ -85,11 +85,9 @@ public class GraphVisualizer {
                 System.out.println("Declared nodes: " + declaredNodes + ", declared edges: " + declaredEdges);
                 MutableGraph mg = mutGraph("graph" + g.id).setDirected(false);
 
-                // Global styling aimed at better readability on medium/large graphs
                 boolean isLarge = declaredNodes >= 80 || declaredEdges >= 150;
                 boolean hideNodeLabels = (args.length > 5 && Boolean.parseBoolean(args[5])) || isLarge; // auto-hide labels when graph is large
 
-                // Graph-level attributes
                 mg.graphAttrs().add(
                         Attributes.attr("bgcolor", "white"),
                         Attributes.attr("splines", "true"),          // smoother edges
@@ -98,7 +96,6 @@ public class GraphVisualizer {
                         Attributes.attr("nodesep", isLarge ? "0.1" : "0.2"),
                         Attributes.attr("ranksep", isLarge ? "0.2" : "0.4")
                 );
-                // Default node attributes
                 if (isLarge) {
                     mg.nodeAttrs().add(
                             Shape.POINT,
@@ -115,7 +112,6 @@ public class GraphVisualizer {
                             Attributes.attr("fontsize", "10")
                     );
                 }
-                // Default edge attributes
                 mg.linkAttrs().add(
                         Attributes.attr("color", "#BBBBBB"),
                         Attributes.attr("penwidth", isLarge ? "0.8" : "1.2")
@@ -217,7 +213,6 @@ public class GraphVisualizer {
                         System.out.println("Wrote: " + pngOut.getPath());
                     }
                 } catch (Throwable t) {
-                    // Common failure mode when using wasm engine is OOM/malloc aborts. Give clear guidance.
                     System.out.println("Failed to render graph id=" + g.id + ": " + t.getMessage());
                     System.out.println("If this is due to wasm/native memory limits, install native Graphviz (dot) and ensure it's on PATH to let graphviz-java use the native engine.");
                 }

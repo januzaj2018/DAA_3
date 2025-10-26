@@ -1,5 +1,6 @@
 package aitu.edu;
 
+import aitu.edu.mst.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

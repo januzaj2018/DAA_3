@@ -1,4 +1,4 @@
-package aitu.edu; /******************************************************************************
+package aitu.edu.mst; /******************************************************************************
  *  Compilation:  javac IndexMinPQ.java
  *  Execution:    java IndexMinPQ
  *  Dependencies: StdOut.java

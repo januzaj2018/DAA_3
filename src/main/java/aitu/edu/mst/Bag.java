@@ -27,7 +27,7 @@
  *
  ******************************************************************************/
 
-package aitu.edu;
+package aitu.edu.mst;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

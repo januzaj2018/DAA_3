@@ -1,5 +1,6 @@
-package aitu.edu;
+package aitu.edu.visual;
 
+import aitu.edu.mst.Edge;
 import guru.nidi.graphviz.attribute.Attributes;
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Label;
@@ -15,10 +16,6 @@ import java.util.*;
 
 import static guru.nidi.graphviz.model.Factory.*;
 
-/**
- * Step-by-step frame exporter using graphviz-java.
- * Writes one image per step to the given directory.
- */
 public class GraphvizAnimator implements MSTStepListener, AutoCloseable {
     private final File outDir;
     private final Format format;
@@ -100,7 +97,6 @@ public class GraphvizAnimator implements MSTStepListener, AutoCloseable {
 
     private void renderFrame(int frameIndex) throws Exception {
         MutableGraph mg = mutGraph("mst-step").setDirected(false);
-        // graph-level styling
         mg.graphAttrs().add(
                 Attributes.attr("bgcolor", "white"),
                 Attributes.attr("splines", "true"),
@@ -109,19 +105,16 @@ public class GraphvizAnimator implements MSTStepListener, AutoCloseable {
                 Attributes.attr("nodesep", "0.2"),
                 Attributes.attr("ranksep", "0.3")
         );
-        // default node appearance
         mg.nodeAttrs().add(
                 Shape.CIRCLE,
                 Attributes.attr("fontname", "Helvetica"),
                 Attributes.attr("fontsize", "10")
         );
-        // default edge appearance
         mg.linkAttrs().add(
                 Attributes.attr("color", "#BBBBBB"),
                 Attributes.attr("penwidth", "1.0")
         );
 
-        // build nodes
         Map<Integer, MutableNode> nodes = new HashMap<>();
         for (int v = 0; v < V; v++) {
             MutableNode n = mutNode("n" + v)
@@ -130,7 +123,6 @@ public class GraphvizAnimator implements MSTStepListener, AutoCloseable {
             mg.add(n);
             nodes.put(v, n);
         }
-        // build edges with per-status styling
         boolean isLarge = V >= 80 || allEdges.size() >= 150; // same threshold used in GraphVisualizer
         for (Edge e : allEdges) {
             int v = e.either();

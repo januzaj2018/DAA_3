@@ -17,10 +17,7 @@
  *
  ******************************************************************************/
 
-package aitu.edu;
-
-import aitu.edu.StdIn;
-import aitu.edu.StdOut;
+package aitu.edu.mst;
 
 import java.util.Comparator;
 import java.util.Iterator;

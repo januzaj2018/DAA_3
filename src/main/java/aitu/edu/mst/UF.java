@@ -1,4 +1,4 @@
-package aitu.edu; /******************************************************************************
+package aitu.edu.mst; /******************************************************************************
  *  Compilation:  javac UF.java
  *  Execution:    java UF < input.txt
  *  Dependencies: StdIn.java StdOut.java

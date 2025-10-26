@@ -1,9 +1,7 @@
-package aitu.edu;
+package aitu.edu.visual;
 
-/**
- * Stub animator that logs steps to console. Kept to avoid adding external GUI dependencies.
- * For real frame-by-frame images, use GraphvizAnimator in this project.
- */
+import aitu.edu.mst.Edge;
+
 public class GraphStreamAnimator implements MSTStepListener, AutoCloseable {
     private final boolean verbose;
 

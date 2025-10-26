@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-package aitu.edu;
+package aitu.edu.mst;
 
 import java.util.Random;
 
